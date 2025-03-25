@@ -827,7 +827,7 @@
     <div id="twitch-player">
       <iframe 
         id="twitch-iframe"
-        src="https://player.twitch.tv/?channel=cabbakid&parent=slowbotstudio.github.io/DimplNightsAtKill4Pill" 
+        src="https://player.twitch.tv/?channel=cabbakid&parent=slowbotstudio.github.io" 
         frameborder="0" 
         allowfullscreen="true" 
         scrolling="no" 
@@ -1174,7 +1174,7 @@ function randomTwitchChannel() {
 function changeTwitchChannel() {
   const newChannel = randomTwitchChannel();
   const iframe = document.getElementById('twitch-iframe');
-  iframe.src = `https://player.twitch.tv/?channel=${newChannel}&parent=slowbotstudio.github.io/DimplNightsAtKill4Pill`;
+  iframe.src = `https://player.twitch.tv/?channel=${newChannel}&parent=slowbotstudio.github.io`;
 }
 
 let areVHSEffectsEnabled = true;
