@@ -194,7 +194,7 @@
     width: 100%;
     height: 100%;
     transition: transform 0.8s ease-out;
-    background: url('img\\backBlue.jpeg') no-repeat center center;
+    background: url('img/backBlue.jpeg') no-repeat center center;
     background-size: cover;
   }
 
@@ -244,6 +244,10 @@
     pointer-events: auto;
     z-index: 45;
     transition: background-color 0.3s, transform 0.1s; /* Add transition for smooth effect */
+  }
+
+  .cam-btn.active {
+    background-color: rgb(133, 133, 133); /* Change color to red when active */
   }
 
   .cam-btn:active {
@@ -880,13 +884,13 @@
     <div id="camera-view-area"></div>
     <button id="close-cam-btn" onclick="playClickSound(); closeCamView()">X</button>
     <div id="cam-buttons">
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam1')">CAM 1</div>
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam2')">CAM 2</div>
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam3')">CAM 3</div>
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam4')">CAM 4</div>
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam5')">CAM 5</div>
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam6')">CAM 6</div>
-      <div class="cam-btn" onclick="playClickSound(); changeCamera('cam7')">CAM 7</div>
+      <div class="cam-btn" id="cam1-btn" onclick="playClickSound(); changeCamera('cam1')">CAM 1</div>
+      <div class="cam-btn" id="cam2-btn" onclick="playClickSound(); changeCamera('cam2')">CAM 2</div>
+      <div class="cam-btn" id="cam3-btn" onclick="playClickSound(); changeCamera('cam3')">CAM 3</div>
+      <div class="cam-btn" id="cam4-btn" onclick="playClickSound(); changeCamera('cam4')">CAM 4</div>
+      <div class="cam-btn" id="cam5-btn" onclick="playClickSound(); changeCamera('cam5')">CAM 5</div>
+      <div class="cam-btn" id="cam6-btn" onclick="playClickSound(); changeCamera('cam6')">CAM 6</div>
+      <div class="cam-btn" id="cam7-btn" onclick="playClickSound(); changeCamera('cam7')">CAM 7</div>
     </div>
   </div>
 </div>
@@ -901,7 +905,7 @@ let isPaused = false;
 let gameInterval;
 let freddyInterval;
 const twitchChannels = ["cabbakid", "arolfish", "kill4pill", "hvorostdumb"];
-const drummingSound = new Audio('sound/toiletFlush.ogg'); //sound/DrummingSticks.ogg
+const drummingSound = new Audio('sound/DrummingSticks.ogg');
 const horrorSound = new Audio('sound/mainhorror_wEm4wbpx.mp3'); // New horror sound
 const clickSound = new Audio('sound/click2.ogg'); // Added click sound
 const startSound = new Audio('sound/toiletFlush.ogg'); 
@@ -1006,15 +1010,17 @@ document.getElementById('light-right').style.backgroundColor = 'gray';
 function openCamView() {
   document.getElementById('cam-view').style.display = 'block';
 }
-
 function changeCamera(camId) {
   // Скрываем текущую камеру, если она отображается
   if (currentCamera) {
     document.getElementById(currentCamera).style.display = 'none';
+    // Reset the button color for the previous camera
+    document.getElementById(currentCamera + '-btn').classList.remove('active');
   }
 
-  // Устанавливаем фоновое изображение для camera-view-area
+  // Устанавливаем фоновое изображение для camera-view-area на white-noise2.gif
   const cameraViewArea = document.getElementById('camera-view-area');
+  cameraViewArea.style.backgroundImage = "url('img/white-noise2.gif')"; // Устанавливаем фоновое изображение по умолчанию
   cameraViewArea.classList.remove(
     'cam1-active',
     'cam2-active',
@@ -1055,10 +1061,16 @@ function changeCamera(camId) {
 
   // Обновляем текущую камеру
   currentCamera = camId;
+  // Set the button color for the active camera
+  document.getElementById(camId + '-btn').classList.add('active');
 }
 
 function closeCamView() {
   document.getElementById('cam-view').style.display = 'none';
+  // Deactivate all camera buttons
+  const camButtons = document.querySelectorAll('.cam-btn');
+  camButtons.forEach(btn => btn.classList.remove('active'));
+  
   if (currentCamera) {
     document.getElementById(currentCamera).style.display = 'none';
     currentCamera = null;
