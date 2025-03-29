@@ -69,6 +69,8 @@
 
   #volume-button {
     background-color: blue;
+    text-decoration: none;
+
   }
 
   #disclaimer {
@@ -97,7 +99,7 @@
 
   #start-button {
     position: absolute;
-    top: calc(40% + 90px); 
+    top: calc(50% + 40px); 
     left: 45%; 
     transform: translateX(-50%); /* Корректируем центрирование */
     padding: 20px 35px;
@@ -201,29 +203,16 @@
   /* Кнопки дверей и света */
   #door-left, #door-right {
     position: absolute;
-    top: 200px;
-    width: 150px;
-    height: 200px;
-    background-color: rgba(255, 0, 0, 0.5);
+    top: 170px;
+    width: 170px;
+    height: 800px;
     cursor: pointer;
     z-index: 3;
   }
-  #door-left { left: 0; }
-  #door-right { right: 0; }
+  #door-left { left: 2%; }
+  #door-right { right: 2%; }
 
-  #light-left, #light-right {
-    position: absolute;
-    top: 180px;
-    width: 50px;
-    height: 50px;
-    background-color: grey;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 3;
-  }
-  #light-left { left: 160px; }
-  #light-right { right: 160px; }
-
+  
   /* Панель управления камерами */
   #cam-buttons {
     position: absolute;
@@ -284,31 +273,44 @@
     font-size: 24px;
     z-index: 20;
   }
-
-  /* GAME OVER */
-  #game-over {
+  #nights {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 40px;
+    right: 10px;
+    font-size: 16px;
+    z-index: 20;
+  }
+
+  /* GAME OVER LAYER */
+  #game-over-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+  }
+
+  #game-over {
     font-size: 48px;
     color: red;
-    display: none;
-    z-index: 30;
+    display: block;
   }
 
   /* Reset button */
   #reset-button {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 55%;
     font-size: 24px;
     color: white;
     background-color: red;
     padding: 10px 20px;
     cursor: pointer;
-    display: none;
+    display: block; /* Changed from none to block */
     pointer-events: auto;
     z-index: 32;
   }
@@ -739,9 +741,9 @@
 
 /* Анимация движения фона для cam6 */
 @keyframes move-background-cam6 {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 55% 55%; }
-  100% { background-position: 0% 0%; }
+  0% { background-position: 30% 30%; }
+  50% { background-position: 85% 85%; }
+  100% { background-position: 30% 30%; }
 }
 
 #camera-view-area.cam6-active {
@@ -784,11 +786,93 @@
   background-color: #6d62fa; /* Темно-красный при наведении */
 }
 
+/* Слой survived */
+#survived-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px; /* Ширина прямоугольника */
+  height: 900px; /* Высота прямоугольника */
+  display: none; /* Скрыт по умолчанию */
+  z-index: 44; /* Выше других элементов */
+  text-align: center;
+  backdrop-filter: blur(900px); /* Блюр на 900px */
+  
+}
+
+#survived {
+  font-size: 48px;
+  color: rgb(255, 0, 0);
+  line-height: 900px; /* Центрирование текста по вертикали */
+}
+
+#reset-surv {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: white;
+  background-color: red;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: block; /* Changed from none to block */
+  pointer-events: auto;
+  z-index: 45;
+}
+
+#additional-info {
+  position: absolute;
+  top: 50%; 
+  left: 45%; 
+  transform: translate(-50%, -50%); /* Корректируем центрирование */
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.7); /* Полупрозрачный фон */
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 42; /* Выше видео */
+}
+
+#donatButton {
+  top: 70%;
+  font-size: 22px;
+  color: white;
+  background-color: orange;
+  padding: 10px 10px;
+  cursor: pointer;
+  display: block; /* Changed from none to block */
+  pointer-events: auto;
+  text-decoration: none;
+  z-index: 32;
+}
+
+#idea-info {
+  position: absolute;
+  top: 30%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); /* Корректируем центрирование */
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  background-color: rgba(199, 189, 189, 0.7); /* Полупрозрачный фон */
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 42;
+}
+
 </style>
 </head>
 <body>
 <div id="game-container">
-
+  <!-- Survived Layer -->
+  <div id="survived-layer">
+    <div id="survived">Survived</div>
+    <div id="reset-surv" onclick="playClickSound(); startGame()">RESET</div>
+  </div>
+  
   <!-- Start Layer -->
   <div id="start-layer">
     <video id="start-video" autoplay muted loop>
@@ -798,15 +882,18 @@
       Игра содержит скримеры, громкие звуки, яркие вспышки, ненормативную лексику, сцены насилия и сексуализированный контент, созданный третьими сторонами. Она предназначена исключительно для лиц старше 21 года.
       Если вы страдаете эпилепсией, светочувствительностью или легко подвержены стрессу, рекомендуется воздержаться от игры. Используйте наушники на низкой громкости и делайте перерывы.
       Разработчики не несут ответственности за любой физический или психологический дискомфорт, возникший в результате взаимодействия с игрой. Игрок полностью берёт на себя ответственность за решение играть.
-      Нажимая кнопку "Start" или начав игру, вы подтверждаете, что вам исполнилось 21 год, вы ознакомились с данным предупреждением и принимаете все возможные риски. Если вы не согласны, пожалуйста, воздержитесь от игры.</div>
+      Нажимая кнопку "Start" или начав игру, вы подтверждаете, что вам исполнилось 21 год, вы ознакомились с данным предупреждением и принимаете все возможные риски. Если вы не согласны, пожалуйста, воздержитесь от игры.
+    </div>
+    <div id="additional-info">*Закрытые двери спасают</div> <!-- Added div for additional information -->
     <button id="start-button" onclick="startGame()">START</button>
   </div>
 
   <!-- Pause Layer -->
   <div id="pause-layer">
     <button id="continue-button" onclick="continueGame()">CONTINUE</button>
-    <button id="pause-reset-button" onclick="resetGame()">RESET</button>
-    <button id="volume-button" onclick="toggleVolume()">VOLUME</button>
+    <a href="https://t.me/slowbotstudio" target="_blank">
+        <button id="volume-button" onclick="toggleVolume()">telegram</button>
+    </a>
   </div>
 
   <!-- Левый паддинг -->
@@ -816,18 +903,16 @@
 
   <!-- Движущийся фон с элементами -->
   <div id="movable-background">
-    <!-- Кнопки дверей и света -->
+    <!-- Кнопки дверей -->
     <div id="door-left"></div>
     <div id="door-right"></div>
-    <div id="light-left"></div>
-    <div id="light-right"></div>
     <!-- Кнопка comp-start -->
     <button id="comp-start" onclick="playClickSound()"></button>
     <!-- Twitch-плеер -->
     <div id="twitch-player">
       <iframe 
         id="twitch-iframe"
-        src="https://player.twitch.tv/?channel=cabbakid&parent=slowbotstudio.github.io" 
+        src="https://player.twitch.tv/?channel=kill4pill&parent=slowbotstudio.github.io" 
         frameborder="0" 
         allowfullscreen="true" 
         scrolling="no" 
@@ -875,8 +960,21 @@
       />
     </div>
     <div id="clock">12:00 AM</div>
-    <div id="game-over">GAME OVER</div>
-    <div id="reset-button" onclick="playClickSound(); resetGame()">RESET</div>
+    <div id="nights">Night 1</div> <!-- Added nights display -->
+    
+    <!-- Game Over Layer -->
+    <div id="game-over-layer">
+      <div id="idea-info">Dimanlit игра: надо сделать игру 
+        типа пять ночей с фреди, 
+        чтобы в каморке был телевизор со стримершами 
+        и периодически ебака появлялся, 
+        это совместит игры и девчонок</div> <!-- Added div for additional information above GAME OVER -->
+      <div id="game-over">GAME OVER</div>
+      <div id="reset-button" onclick="playClickSound(); startGame()">RESET</div>
+      <a href="https://www.donationalerts.com/r/slowbotstudio" target="_blank">
+        <button id="donatButton">на кофе</button> <!-- Moved styles to CSS -->
+      </a>
+    </div>
   </div>
 
   <!-- Слой просмотра камер -->
@@ -898,17 +996,204 @@
 let currentCamera = null;
 let power = 100;
 let time = 0;
+let nights = 1; // Added nights variable
 let gameOver = false;
 let powerDrain = 0.15;
 let gameStarted = false;
 let isPaused = false;
 let gameInterval;
 let freddyInterval;
-const twitchChannels = ["cabbakid", "arolfish", "kill4pill", "hvorostdumb"];
+const twitchChannels = ["korya_mc", "MaryBaby_", "kill4pill", "AlinaRinRin",
+  "SATANMATE_", "Sharishaxd", "moranabattoryq", "GloriaMatvien",
+  "whylollycry", "mira", "honeyramonaflowers", "evaanaa",
+  "mildixs", "yuuechka", "ANGEJlA", "arina_gp",
+  "Gilticus", "Lyasyaa", "mugretnug", "nordvi",
+  "Lorinefairy", "PomfyChan", "morphe_ya", "tattionme",
+  "morphilina", "rootyasha", "nenormova", "LeyaGornaya",
+  "fasoollka", "whereisBNN", "di_rubens", "Eiritel",
+  "tabula_russia", "akyuliych", "Mabelend", "vikared",
+  "katerina999", "k_i_r_a", "DianaRice", "AhriNyan",
+  "mash_milash_hub", "NamiNetsu", "B3BRINA", "taybisox",
+  "xaritooshka", "gaitur", "olyashaa", "skoomacat",
+  "BarbieGirl", "veroniffka", "goleavee", "s1leniel",
+  "GAECHKATM", "disnaface", "AlinaNaMeli", "etogabi",
+  "CHR1SWAVE", "maryymme", "svetasollarr", "sanechkaya",
+  "rudysayuki", "likaxqq", "BULOCHKA", "lumitalle",
+  "lyna_com2000", "ELLVI", "xmednis", "Kvashena9",
+  "VikiBlade", "soll_dei", "DOIIIUK", "Anannke",
+  "Fruktozka", "yuliabaka", "sofigrai0", "keyeren",
+  "turboxgirl", "MELKAA", "ekatze007", "juliaagavrilina",
+  "mmet", "i_olga", "ypryamkova", "tossibossy",
+  "Lipisinkaaa", "tenderlybae", "poliniych", "Cover_Diva",
+  "Tangerin", "koshkamoroshka", "Pepelnayaa", "unuasha",
+  "zanudA", "AlishaMalinova", "ksyasha", "ant1pat1aXD",
+  "balabanova", "KatyaKaisa", "exx1dae", "YULIA_PINKO",
+  "Lily_Off_Valley", "heysedaya", "Denly", "vafom",
+  "popazik", "nicoleheart23", "eevochka", "f639olya",
+  "ai_mori", "by_Owl", "yugybunyg", "busya18plus",
+  "iksssy", "panifika", "sony9sha", "Sorabi_",
+  "OlesyaBulletka", "iceystellar", "clubnikka", "lilsk8_kitty",
+  "yyyyasno", "lyasheva", "grechka_21", "Smorodinova",
+  "nepravdopodobno", "valyusha", "RomanovaLera", "niateppa",
+  "niateppa", "niateppa", "niateppa", "niateppa",
+  "niateppa", "niateppa", "niateppa", "niateppa",
+  "A1iberry", "LlNAONE", "51LINA", "duel_allen",
+  "leonesan", "keilaqt", "influesii", "dasha228play",
+  "DiVenda", "depresonic", "shulochka", "iris",
+  "aisumaisu", "Sindics", "lalipinkcheeks", "yakorka",
+  "lizabaktt", "meegera", "Yanulya27", "ann_krafts",
+  "delaylamy", "havebullet", "mar1oasmr", "manka_a",
+  "olyavoodoo", "AVDEECH", "MadaoBloom", "toktpok",
+  "TanyaBelkova", "fumimochi", "uuraniummm", "polysladkaya",
+  "Cymanneth", "zvezdo4kina", "aHu4oux", "reihatori",
+  "NikaYpypy", "STKLV", "nelyaray", "Leron_Baron",
+  "JuliaGERASIM", "karachenskaya", "Onutich", "yummy_yum",
+  "A_n_i_n_y_a", "miotyan", "lambikq", "milmipl_",
+  "voiness"
+];
 const drummingSound = new Audio('sound/DrummingSticks.ogg');
 const horrorSound = new Audio('sound/mainhorror_wEm4wbpx.mp3'); // New horror sound
 const clickSound = new Audio('sound/click2.ogg'); // Added click sound
 const startSound = new Audio('sound/toiletFlush.ogg'); 
+const doorKnockSound = new Audio('sound/elevator_door.wav'); // Added door knock sound variable
+const doorCloseSound = new Audio('sound/doorClose_3.ogg'); // Added door close sound
+
+let leftDoorClosed = false; // Added variable to track left door state
+let rightDoorClosed = false; // Added variable to track right door state
+
+let activeEvent = -1; // Added active event variable
+let lastEvent = -1; // Added last event variable
+
+let cameraImages = [
+  "url('img/cam1.jpg')",
+  "url('img/cam2.jpeg')",
+  "url('img/cam3.jpg')",
+  "url('img/cam4.jpg')",
+  "url('img/cam5.jpg')",
+  "url('img/cam6.jpg')",
+  "url('img/cam7.jpg')"
+];
+
+const eventSound = 'sound/engine1.ogg'; // Moved sound to a separate variable
+const SCREAMER = 'img/screamer.mp4'; // Moved screamer to a separate variable
+const screamer = "sound/screamer2.mp3";
+const banTwitch = "img/banT.png"
+
+const events = [
+  {
+    id: 1,
+    imgEvent: "url('img/cam1-0.jpg')",
+    imgDefault: "url('img/cam1.jpg')",
+    sound: eventSound,
+    side: 'left'
+  },
+  {
+    id: 2,
+    imgEvent: "url('img/cam2-0.jpg')",
+    imgDefault: "url('img/cam2.jpeg')",
+    sound: eventSound,
+    side: 'right'
+  },
+  {
+    id: 3,
+    imgEvent: "url('img/cam3-0.jpg')",
+    imgDefault: "url('img/cam3.jpg')",
+    sound: eventSound,
+    side: 'right'
+  },
+  {
+    id: 4,
+    imgEvent: "url('img/cam4-0.jpg')",
+    imgDefault: "url('img/cam4.jpg')",
+    sound: eventSound,
+    side: 'right'
+  },
+  {
+    id: 5,
+    imgEvent: "url('img/cam5-0.jpg')",
+    imgDefault: "url('img/cam5.jpg')",
+    sound: eventSound,
+    side: 'right'
+  },
+  {
+    id: 6,
+    imgEvent: "url('img/cam6-0.jpg')",
+    imgDefault: "url('img/cam6.jpg')",
+    sound: eventSound,
+    side: 'right'
+  },
+  {
+    id: 7,
+    imgEvent: "url('img/cam7-0.jpg')",
+    imgDefault: "url('img/cam7.jpg')",
+    sound: eventSound,
+    side: 'left'
+  },
+  // Add more events as needed
+];
+
+function getRandomEvent() {
+  let newEvent;
+  do {
+    newEvent = Math.floor(Math.random() * events.length);
+  } while (newEvent === lastEvent || newEvent === activeEvent); // Ensure newEvent is different from both lastEvent and activeEvent
+  
+  lastEvent = activeEvent; // Update lastEvent to the previous active event
+  activeEvent = newEvent; // Store the new event number (1-based index)
+  return events[newEvent]; // Return the selected event
+}
+
+function startEvent(event) {
+  // Заменяем ссылку соответствующей камеры на imgEvent из аргумента
+  const cameraIndex = event.id - 1; // Получаем индекс камеры (id - 1)
+  if (cameraIndex >= 0 && cameraIndex < cameraImages.length) {
+    cameraImages[cameraIndex] = event.imgEvent; // Заменяем ссылку на изображение камеры
+  }
+  
+  // Воспроизводим звук события
+  const eventSound = new Audio(event.sound);
+  eventSound.play();
+}
+
+function endEvent(event) {
+  // Заменяем ссылку соответствующей камеры на imgDefault из аргумента
+  const cameraIndex = event.id - 1; // Получаем индекс камеры (id - 1)
+  if (cameraIndex >= 0 && cameraIndex < cameraImages.length) {
+    cameraImages[cameraIndex] = event.imgDefault; // Заменяем ссылку на изображение камеры
+  }
+  lastEvent = activeEvent; // Update lastEvent to the new event
+  activeEvent = -1;
+}
+
+function playScreamer(event) {
+  const isDoorOpen = (event.side === 'left' && !leftDoorClosed) || (event.side === 'right' && !rightDoorClosed); // Check if the corresponding door is open
+
+  if (isDoorOpen) {
+    const screamerVideo = document.createElement('video');
+    screamerVideo.src = SCREAMER; // Assuming SCREAMER is a valid video source
+    screamerVideo.style.position = 'fixed';
+    screamerVideo.style.top = '0';
+    screamerVideo.style.left = '0';
+    screamerVideo.style.width = '100%';
+    screamerVideo.style.height = '100%';
+    screamerVideo.style.zIndex = '50'; // Ensure it's on the top layer
+    screamerVideo.autoplay = true;
+    screamerVideo.muted = false; // Mute the video if needed
+    screamerVideo.volume = 0.7;
+    document.body.appendChild(screamerVideo);
+    
+    // Stop the video after it ends
+    screamerVideo.onended = () => {
+        document.body.removeChild(screamerVideo); // Remove the video from the DOM
+        endGame(); // Call the function to handle game over logic
+    };
+  }
+  else {
+    doorKnockSound.currentTime = 0; // Ensure to provide the correct path to the sound file
+    doorKnockSound.volume = 0.8;
+    doorKnockSound.play();
+  }
+}
 
 function playClickSound() {
   clickSound.volume = 0.9;
@@ -925,34 +1210,66 @@ function startGame() {
   playStartSound(); // Play sound when starting the game
   document.getElementById('twitch-player').style.display = 'none'; // Hide twitch-player
   gameStarted = true;
+  gameOver = false;
   document.getElementById('start-layer').style.display = 'none';
   drummingSound.pause(); // Stop drumming sound when starting the game
   horrorSound.volume = 0.9; // Set volume for horror sound
   horrorSound.currentTime = 0; // Reset horror sound to start
   horrorSound.play(); // Play horror sound during the game
+  document.getElementById('power-fill').style.width = '100%';
+  document.getElementById('game-over-layer').style.display = 'none'; // Hide game over layer
+  document.getElementById('survived-layer').style.display = 'none';
+  document.getElementById('clock').textContent = '12:00 AM';
+  document.getElementById('cam-view').style.display = 'none';
+  
+  // Сброс состояния дверей
+  document.getElementById('door-left').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
+  document.getElementById('door-right').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
 
-  // Delay the start of the game for 5 seconds
-  setTimeout(() => {
-    // Start game timers only after clicking Start
-    gameInterval = setInterval(() => {
-      if (!gameOver && gameStarted && !isPaused) {
-        updatePower();
-        updateTime();
-      }
-    }, 1000);
+  // Reset time and nights for a new game
+  time = 0;
+  nights = 1; // Reset nights to 1
+  document.getElementById('nights').textContent = `Night: ${nights}`; // Update nights display
+  // Reset power before starting the game
+  power = 100; // Reset power to 100
+  // Call playGame to start the game logic after a delay
+  setTimeout(playGame, 5000); // 5 seconds delay
+}
 
-    // Start Freddy movement only after clicking Start
-    freddyInterval = setInterval(() => {
-      if (!gameOver && gameStarted && !isPaused && Math.random() < 0.1) {
-        const cameras = ['cam1', 'cam2', 'cam3', 'cam4', 'cam5', 'cam6', 'cam7'];
-        const randomCam = cameras[Math.floor(Math.random() * cameras.length)];
-        document.getElementById(randomCam).style.backgroundImage = "url('https://i.imgur.com/your-freddy.jpg')";
-        setTimeout(() => {
-          document.getElementById(randomCam).style.backgroundImage = '';
-        }, 2000);
+function playGame() {
+  let eventS = getRandomEvent();
+  const randEventTime1 = Math.floor(Math.random() * (190 - 100 + 1)) + 100; // Random value between 120 and 200
+  const randEventTime2 = Math.floor(Math.random() * (300 - 210 + 1)) + 210; // Random value between 210 and 300
+  console.log("random", randEventTime1, randEventTime2)
+  // Start game timers only after clicking Start
+  gameInterval = setInterval(() => {
+    if (!gameOver && gameStarted && !isPaused) {
+      updatePower();
+      updateTime();
+      
+      // Call random event at 2 AM and 4 AM
+      if (time === randEventTime1 || time === randEventTime2) {
+        eventS = getRandomEvent();
+        startEvent(eventS); // Send generated event to startEvent
       }
-    }, 5000);
-  }, 5000); // 5 seconds delay
+      if (time === (randEventTime1+30) || time === (randEventTime2+30)) {
+        endEvent(eventS); // Send generated event to endEvent
+        playScreamer(eventS); // Play screamer after handling the event
+      }
+    }
+  }, 1000);
+
+  // Start Freddy movement only after clicking Start
+  freddyInterval = setInterval(() => {
+    if (!gameOver && gameStarted && !isPaused && Math.random() < 0.1) {
+      const cameras = ['cam1', 'cam2', 'cam3', 'cam4', 'cam5', 'cam6', 'cam7'];
+      const randomCam = cameras[Math.floor(Math.random() * cameras.length)];
+      document.getElementById(randomCam).style.backgroundImage = "url('https://i.imgur.com/your-freddy.jpg')";
+      setTimeout(() => {
+        document.getElementById(randomCam).style.backgroundImage = '';
+      }, 2000);
+    }
+  }, 5000);
 }
 
 // Функция переключения видимости twitch-player
@@ -995,17 +1312,13 @@ function continueGame() {
   togglePause();
 }
 
-// Двери и свет
+// Двери
 document.getElementById('door-left').addEventListener('click', toggleDoorLeft);
 document.getElementById('door-right').addEventListener('click', toggleDoorRight);
-document.getElementById('light-left').addEventListener('click', toggleLightLeft);
-document.getElementById('light-right').addEventListener('click', toggleLightRight);
 
-// Установка начального состояния дверей и света
-document.getElementById('door-left').style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
-document.getElementById('door-right').style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
-document.getElementById('light-left').style.backgroundColor = 'gray';
-document.getElementById('light-right').style.backgroundColor = 'gray';
+// Установка начального состояния дверей
+document.getElementById('door-left').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
+document.getElementById('door-right').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
 
 function openCamView() {
   document.getElementById('cam-view').style.display = 'block';
@@ -1031,28 +1344,10 @@ function changeCamera(camId) {
     'cam7-active'
   ); // Удаляем все классы анимации
 
-  if (camId === 'cam1') {
-    cameraViewArea.style.backgroundImage = "url('img/cam1.png')";
-    cameraViewArea.classList.add('cam1-active'); // Добавляем класс для анимации фона
-  } else if (camId === 'cam2') {
-    cameraViewArea.style.backgroundImage = "url('img/cam2.png')";
-    cameraViewArea.classList.add('cam2-active');
-  } else if (camId === 'cam3') {
-    cameraViewArea.style.backgroundImage = "url('img/cam3.png')";
-    cameraViewArea.classList.add('cam3-active');
-  } else if (camId === 'cam4') {
-    cameraViewArea.style.backgroundImage = "url('img/cam4.png')";
-    cameraViewArea.classList.add('cam4-active');
-  } else if (camId === 'cam5') {
-    cameraViewArea.style.backgroundImage = "url('img/cam5.png')";
-    cameraViewArea.classList.add('cam5-active');
-  } else if (camId === 'cam6') {
-    cameraViewArea.style.backgroundImage = "url('img/cam6.png')";
-    cameraViewArea.classList.add('cam6-active');
-  } else if (camId === 'cam7') {
-    cameraViewArea.style.backgroundImage = "url('img/cam7.png')";
-    cameraViewArea.classList.add('cam7-active');
-  }
+  // Используем массив cameraImages для установки фона
+  const cameraIndex = parseInt(camId.replace('cam', '')) - 1; // Получаем индекс камеры
+  cameraViewArea.style.backgroundImage = cameraImages[cameraIndex]; // Устанавливаем фоновое изображение из массива
+  cameraViewArea.classList.add(`${camId}-active`); // Добавляем класс для анимации фона
 
   // Убедимся, что изображение не выходит за рамки области
   cameraViewArea.style.backgroundSize = 'cover'; // Масштабируем изображение
@@ -1080,38 +1375,52 @@ function closeCamView() {
 function toggleDoorLeft() {
   if (!gameStarted || isPaused) return;
   const door = document.getElementById('door-left');
-  const isOpen = door.style.backgroundColor === 'rgba(0, 255, 0, 0.5)';
-  door.style.backgroundColor = isOpen ? 'rgba(255, 0, 0, 0.5)' : 'rgba(0, 255, 0, 0.5)';
-  powerDrain += isOpen ? -0.125 : 0.125;
+  leftDoorClosed = !leftDoorClosed; // Toggle the state of leftDoorClosed
+  door.style.backgroundImage = leftDoorClosed ? "url('img/doorClose.png')" : "url('img/doorOpen.png')"; // Set door image based on state
+  door.style.backgroundColor = 'transparent'; // Make the button transparent
+  doorCloseSound.currentTime = 0; // Reset sound to start
+  doorCloseSound.volume = 0.7;
+  doorCloseSound.play(); // Play door close sound
+  powerDrain += leftDoorClosed ? 0.5 : -0.5; // Adjust power drain based on door state
 }
 
 function toggleDoorRight() {
   if (!gameStarted || isPaused) return;
   const door = document.getElementById('door-right');
-  const isOpen = door.style.backgroundColor === 'rgba(0, 255, 0, 0.5)';
-  door.style.backgroundColor = isOpen ? 'rgba(255, 0, 0, 0.5)' : 'rgba(0, 255, 0, 0.5)';
-  powerDrain += isOpen ? -0.125 : 0.125;
-}
-
-function toggleLightLeft() {
-  if (!gameStarted || isPaused) return;
-  const light = document.getElementById('light-left');
-  const isOn = light.style.backgroundColor === 'yellow';
-  light.style.backgroundColor = isOn ? 'gray' : 'yellow';
-  powerDrain += isOn ? -0.125 : 0.125;
-}
-
-function toggleLightRight() {
-  if (!gameStarted || isPaused) return;
-  const light = document.getElementById('light-right');
-  const isOn = light.style.backgroundColor === 'yellow';
-  light.style.backgroundColor = isOn ? 'gray' : 'yellow';
-  powerDrain += isOn ? -0.125 : 0.125;
+  rightDoorClosed = !rightDoorClosed; // Toggle the state of rightDoorClosed
+  door.style.backgroundImage = rightDoorClosed ? "url('img/doorClose.png')" : "url('img/doorOpen.png')"; // Set door image based on state
+  door.style.backgroundColor = 'transparent'; // Make the button transparent
+  doorCloseSound.currentTime = 0; // Reset sound to start
+  doorCloseSound.volume = 0.7;
+  doorCloseSound.play(); // Play door close sound
+  powerDrain += rightDoorClosed ? 0.5 : -0.5; // Adjust power drain based on door state
 }
 
 function updatePower() {
   if (power <= 0) {
-    endGame();
+    // Добавляем случайный ивент
+    //const event = getRandomEvent();
+    setTimeout(() => {
+      const banImage = document.createElement('img');
+      banImage.src = banTwitch; // Set the source to the banTwitch image
+      banImage.style.position = 'fixed';
+      banImage.style.top = '0';
+      banImage.style.left = '0';
+      banImage.style.width = '100%';
+      banImage.style.height = '100%';
+      banImage.style.zIndex = '100'; // Ensure it's on the top layer
+      document.body.appendChild(banImage); // Add the image to the body
+
+      const screamerAudio = new Audio(screamer); // Create a new audio object for the screamer
+      if (!screamerAudio.paused) return; // Check if the audio is already playing
+      screamerAudio.volume = 0.3; // Set volume
+      screamerAudio.play(); // Play the screamer sound
+
+      screamerAudio.onended = () => {
+          document.body.removeChild(banImage); // Remove the banTwitch image after the screamer ends
+      };
+      endGame(); // Вызов функции endGame после воспроизведения звука
+    }, 10000); // Задержка 10 секунд
     return;
   }
   power -= powerDrain;
@@ -1124,46 +1433,63 @@ function updateTime() {
   let minutes = time % 60;
   const clock = document.getElementById('clock');
   clock.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} AM`;
+  
+  // Update nights count
   if (hours >= 6) {
-    alert('You survived!');
-    resetGame();
+    nights++; // Increment nights
+    document.getElementById('nights').textContent = `Night: ${nights}`; // Update nights display
+    if (nights > 5) {
+      surviveGame(); // Call surviveGame when all nights are survived
+    } else {
+      continueNights(); // Call continueNights for the next night
+    }
   }
+}
+
+function continueNights() {
+  playClickSound(); // Play sound when continuing to the next night
+  power = 100;
+  time = 0;
+  document.getElementById('nights').textContent = `Night: ${nights}`; // Keep nights display
+  gameOver = false;
+  isPaused = false;
+  gameStarted = true;
+  powerDrain = 0.15;
+  
+  drummingSound.pause(); // Stop drumming sound when starting the game
+  horrorSound.volume = 0.9; // Set volume for horror sound
+  horrorSound.currentTime = 0; // Reset horror sound to start
+  horrorSound.play();
+
+  document.getElementById('power-fill').style.width = '100%';
+  document.getElementById('game-over-layer').style.display = 'none'; // Hide game over layer
+  document.getElementById('reset-button').style.display = 'none';
+  document.getElementById('clock').textContent = '12:00 AM';
+  document.getElementById('cam-view').style.display = 'none';
+  document.getElementById('survived-layer').style.display = 'none';
+  
+  // Сброс состояния дверей
+  document.getElementById('door-left').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
+  document.getElementById('door-right').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
+  
+  clearInterval(gameInterval);
+  clearInterval(freddyInterval);
+
+  playGame(); // Start the game after resetting
 }
 
 function endGame() {
   gameOver = true;
-  document.getElementById('game-over').style.display = 'block';
-  document.getElementById('reset-button').style.display = 'block';
+  document.getElementById('game-over-layer').style.display = 'flex'; // Show game over layer
+  document.getElementById('reset-button').style.display = 'block'; // Ensure RESET button is visible
   clearInterval(gameInterval);
   clearInterval(freddyInterval);
   horrorSound.pause(); // Stop horror sound when game ends
-}
-
-function resetGame() {
-  playClickSound(); // Play sound when resetting the game
-  document.getElementById('twitch-player').style.display = 'none'; // Hide twitch-player
-  power = 100;
-  time = 0;
-  gameOver = false;
-  gameStarted = false;
-  isPaused = false;
+  // Reset game state variables
+  gameStarted = false; // Ensure gameStarted is false when game ends
+  time = 0; // Reset time
+  nights = 1; // Reset nights
   powerDrain = 0.15;
-  document.getElementById('power-fill').style.width = '100%';
-  document.getElementById('game-over').style.display = 'none';
-  document.getElementById('reset-button').style.display = 'none';
-  document.getElementById('clock').textContent = '12:00 AM';
-  document.getElementById('start-layer').style.display = 'flex';
-  document.getElementById('pause-layer').style.display = 'none';
-  document.getElementById('cam-view').style.display = 'none';
-  
-  // Сброс состояния дверей и света
-  document.getElementById('door-left').style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
-  document.getElementById('door-right').style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
-  document.getElementById('light-left').style.backgroundColor = 'gray';
-  document.getElementById('light-right').style.backgroundColor = 'gray';
-  
-  clearInterval(gameInterval);
-  clearInterval(freddyInterval);
 }
 
 function randomTwitchChannel() {
@@ -1275,6 +1601,15 @@ function resizeTwitchPlayer() {
     isPlayerResized = true;
   }
 }
+
+// Функция surviveGame
+function surviveGame() {
+  document.getElementById('survived-layer').style.display = 'block'; // Показываем слой survived
+  document.getElementById('reset-surv').style.display = 'block'; // Ensure RESET button is visible
+  clearInterval(gameInterval); // Останавливаем игру
+  clearInterval(freddyInterval); // Останавливаем движение Фредди
+}
+
 // Запускаем звук при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   drummingSound.loop = true; // Зацикливаем звук
@@ -1300,4 +1635,4 @@ document.getElementById('start-layer').addEventListener('transitionend', () => {
 });
 </script>
 </body>
-</html>
+</html> 
