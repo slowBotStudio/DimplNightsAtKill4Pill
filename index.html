@@ -1471,6 +1471,8 @@ function continueNights() {
   // Сброс состояния дверей
   document.getElementById('door-left').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
   document.getElementById('door-right').style.backgroundImage = "url('img/doorOpen.png')"; // Set default image to doorOpen
+  leftDoorClosed = false; // Set left door state to open
+  rightDoorClosed = false; // Set right door state to open
   
   clearInterval(gameInterval);
   clearInterval(freddyInterval);
